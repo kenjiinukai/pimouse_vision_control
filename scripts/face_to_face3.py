@@ -9,12 +9,19 @@ class FaceToFace():
 		sub = rospy.Subscriber("/cv_camera/image_raw", Image, self.get_image)
 		self.bridge = CvBridge()
 		self.image_org = None
+		self.pub = rospy.Publisher("face",Image,queue_size=1)
 
 	def	get_image(self,img):
 		try:
 			self.image_org = self.bridge.imgmsg_to_cv2(img,"bgr8")
 		except CvBridgeError as e:
 			rospy.logerr(e)
+
+	def	monitor(self,rect,org):
+		if rect is not None:
+			cv2.rectangle(org,tuple(rect[0:2]),tuple(rect[0:2]+rect[2:4]),(0,255,255),4)
+		
+		self.pub.publish(self.bridge.cv2_to_imgmsg(org,"bgr8"))
 
 	def	detect_face(self):
 		if self.image_org is None:
@@ -28,12 +35,12 @@ class FaceToFace():
 		face = cascade.detectMultiScale(gimg,1.1,1,cv2.CASCADE_FIND_BIGGEST_OBJECT)
 		
 		if len(face) == 0:
+			self.monitor(None,org)
 			return None
 
 		r = face[0]
-		cv2.rectangle(org,tuple(r[0:2]),tuple(r[0:2]+r[2:4]),(0,255,255),4)
-		cv2.imwrite("/tmp/image.jpg",org)
-		return "detected"
+		self.monitor(r,org)
+		return r
 
 
 if __name__ == '__main__':
