@@ -6,10 +6,17 @@ from cv_bridge import CvBridge, CvBridgeError
 
 class FaceToFace():
 	def	__init__(self):
+		# for vision control
 		sub = rospy.Subscriber("/cv_camera/image_raw", Image, self.get_image)
 		self.bridge = CvBridge()
 		self.image_org = None
 		self.pub = rospy.Publisher("face",Image,queue_size=1)
+		self.cmd_vel = rospy.Publisher("/cmd_vel",Twist,queue_size=1)
+		# for motor control
+		rospy.wait_for_service("/motor_on")
+		rospy.wait_for_service("/motor_off")
+		rospy.on_shutdown(rospy.ServiceProxy("/motor_off",Trigger).call)
+		rospy.ServiceProxy("/motor_on",Trigger).call()
 
 	def	get_image(self,img):
 		try:
@@ -41,6 +48,10 @@ class FaceToFace():
 		r = face[0]
 		self.monitor(r,org)
 		return r
+
+	def rot_vel(self):
+		r = self.detect_face()
+		if r is None:
 
 
 if __name__ == '__main__':
