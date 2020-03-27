@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #encoding: utf8
-import rospy, cv2
+import rospy, cv2, math
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 
@@ -52,7 +52,19 @@ class FaceToFace():
 	def rot_vel(self):
 		r = self.detect_face()
 		if r is None:
+			return 0.0
 
+		wid = self.image_org.shape[1]/2		# half size value of image width
+		pos_x_rate = (r[0] + r[2]/2 - wid) * 1.0 / wid
+		rot = -0.25*pos_x_rate*math.pi		# if face is located at edge of image, angular velocity is  pi/4[rad/s] 
+		rospy.loginfo("detected %f",rot)
+		return rot
+
+	def control(self):
+		m = Twist()
+		m.linear.x = 0.0
+		m.angular.z = self.rot_vel()
+		self.cmd_vel.publish(m)
 
 if __name__ == '__main__':
 	rospy.init_node('face_to_face')
