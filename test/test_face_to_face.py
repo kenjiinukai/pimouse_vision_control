@@ -38,7 +38,7 @@ class VisionTest(unittest.TestCase):
         if l_turn_rate > 0.6 and r_turn_rate < 0.2: turn = "left"
 
         self.assertFalse(turn is None, "direction is not fixed. l:" + str(l_turn_rate) + " r:" + str(r_turn_rate))
-        self.assertEqual(sys.argv[i], turn, "wrong direction. l: " + str(l_turn_rate) + " r:" + str(r_turn_rate))
+        self.assertEqual(sys.argv[1], turn, "wrong direction. l: " + str(l_turn_rate) + " r:" + str(r_turn_rate))
 
 if __name__ == '__main__':
     rospy.init_node('test_face_to_face')
