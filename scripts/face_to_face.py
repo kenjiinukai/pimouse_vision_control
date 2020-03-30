@@ -4,7 +4,7 @@ import rospy, cv2, math
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 from geometry_msgs.msg import Twist
-from std_srv.srv import Trigger
+from std_srvs.srv import Trigger
 
 class FaceToFace():
 	def	__init__(self):
