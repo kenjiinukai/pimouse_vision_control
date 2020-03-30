@@ -15,7 +15,7 @@ rsync -av ./ ~/catkin_ws/src/pimouse_vision_control/
 cd ~/catkin_ws/src/
 git clone https://github.com/OTL/cv_camera.git
 git clone https://github.com/citueda/pimouse_ros.git
-rosdep install -r -y --from-paths --ignore-src
+rosdep install -r -y --from-paths --ignore-src cv_camera
 
 # make
 cd ~/catkin_ws
