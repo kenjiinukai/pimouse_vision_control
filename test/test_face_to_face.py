@@ -13,7 +13,7 @@ class VisionTest(unittest.TestCase):
         count, l_turn_count,r_turn_count = 0, 0, 0
         start = rospy.Time.now().to_sec()
 
-        prev_lhz, prev_rhz = 0.0
+        prev_lhz, prev_rhz = 0, 0
         rate = rospy.Rate(10)
         while rospy.Time.now().to_sec() - start < 10.0:
             lhz = self.get_file_freq("l")
