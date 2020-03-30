@@ -6,6 +6,7 @@ sudo apt install opencv-data libopencv-dev python-opencv
 sudo apt install ros-melodic-cv-bridge
 #sudo apt install ros-melodic-cv-camera
 sudo apt install ros-melodic-image-transport-plugins 
+sudo apt install ros-melodic-camera-info-manager
 
 #sync
 rsync -av ./ ~/catkin_ws/src/pimouse_vision_control/
