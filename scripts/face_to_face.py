@@ -56,7 +56,7 @@ class FaceToFace():
 
 		wid = self.image_org.shape[1]/2		# half size value of image width
 		pos_x_rate = (r[0] + r[2]/2 - wid) * 1.0 / wid
-		rot = -0.25*pos_x_rate*math.pi		# if face is located at edge of image, angular velocity is  pi/4[rad/s] 
+		rot = -0.25*pos_x_rate*math.pi		# if face is located at edge of image, angular velocity is pi/4[rad/s] 
 		rospy.loginfo("detected %f",rot)
 		return rot
 
