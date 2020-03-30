@@ -2,7 +2,7 @@
 import unittest, rostest
 import rosnode, rospy, sys, time
 
-class VisionTest(unittest,TestCase):
+class VisionTest(unittest.TestCase):
     def get_file_freq(self,lr):
         with open("/dev/rtmotor_raw_" + lr + "0","r") as f:
             s = f.readline().rstrip()
